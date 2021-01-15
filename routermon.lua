@@ -54,14 +54,14 @@ function getWanTxBytes()
 end
 
 local function connectBlynk()
-  local host = "connect.blynk-cloud.ml"
+  local host = "blynk-cloud.com"
 
   local sock = assert(socket.tcp())
   sock:setoption("tcp-nodelay", true)
 
   if use_ssl then
     print("Connecting Blynk (secure)...")
-    sock:connect(host, 9443)
+    sock:connect(host, 443)
     local opts = {
       mode = "client",
       protocol = "tlsv1"
