@@ -23,5 +23,5 @@ lua routermon.lua <your_auth_token>
 
 ## Autorun in background
 Go to 192.168.1.1 >System >Startup >Local Startup
-Insert ```lua routermon.lua <your_auth_token> > /dev/null &``` (in front of 'exit 0').
+Insert ```cd /root/blynk_routermon-1.0 && lua routermon.lua <your_auth_token> > /dev/null &``` (in front of 'exit 0').
 Enjoy!
