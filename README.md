@@ -26,6 +26,7 @@ Go to 192.168.1.1 >System >Startup >Local Startup
 Insert ```cd /root/blynk_routermon-1.0 && lua routermon.lua <your_auth_token> > /dev/null &``` (in front of 'exit 0').
 Enjoy!
 
-##QR-Code for Blynk project
+## QR-Code for Blynk project
 ![Qr-blynk](https://github.com/ImOstrovskiy/blynk_routermon/blob/main/BlynkApp.png)
 You can copy my Blynk project with this QR-code
+
