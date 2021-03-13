@@ -45,12 +45,16 @@ function getCpuLoad()
   return tonumber(exec_out("top -bn1 | grep 'CPU:' | head -n1 | awk '{print $2+$4}'"))
 end
 
-function getRamUsage()
-  return tonumber(exec_out("free | grep Mem | awk '{print ($3-$7)/$2 * 100.0}'"))
-end
-
 function getWanTxBytes()
   return tonumber(read_file("/sys/class/net/eth0.2/statistics/tx_bytes"))
+end
+
+function getStorageInfo()
+  return exec_out("df -h")
+end
+
+function getConnectedUsers()
+  return exec_out(" cut -c 30-100 /tmp/dhcp.leases")
 end
 
 local function connectBlynk()
@@ -78,7 +82,7 @@ end
 
 --[[ WiFi on/off ]]
 
-blynk:on("V20", function(param)
+blynk:on("V9", function(param)
   if param[1] == "1" then
     os.execute("wifi up")
   else
@@ -88,31 +92,17 @@ end)
 
 --[[ Reboot ]]
 
-blynk:on("V31", function(param)
+blynk:on("V8", function(param)
   if param[1] == "1" then
     os.execute("reboot")
   end
 end)
 
---[[ Shell ]]
-
-blynk:on("V35", function(param)
-  local out = exec_out(param[1])
-  blynk:virtualWrite(35, out)
-end)
-
-
-
-blynk:on("connected", function(ping)
-  print("Ready. Ping: "..math.floor(ping*1000).."ms")
-
-  blynk:virtualWrite(12, getWanIP())
-end)
-
-blynk:on("disconnected", function()
-  print("Disconnected.")
-  socket.sleep(5)
-  connectBlynk()
+--[[ Wake PC ]]
+blynk:on("V7", function(param)
+  if param[1] == "1" then
+    os.execute("etherwake -D -i br-lan -b Your Mac-Address Here")
+  end
 end)
 
 --[[ Timers ]]
@@ -125,18 +115,18 @@ local tmr1 = Timer:new{interval = 700, func = function()
   if prev.tx then
     local dtx = tx - prev.tx
     if prev.dtx ~= dtx then
-      blynk:virtualWrite(1, dtx)
+      blynk:virtualWrite(10, dtx)
       prev.dtx = dtx
     end
   end
   prev.tx = tx
-
-  blynk:virtualWrite(5, getCpuLoad())
-  blynk:virtualWrite(6, getRamUsage())
-  blynk:virtualWrite(10, getArpClients())
-  blynk:virtualWrite(11, string.format("%.1f h", getUptime()/60/60))
+  blynk:virtualWrite(1, getWanIP())
+  blynk:virtualWrite(2, getCpuLoad())
+  blynk:virtualWrite(3, getArpClients())
+  blynk:virtualWrite(4, string.format("%.1f h", getUptime()/60/60))
+  blynk:virtualWrite(5, "clr", getStorageInfo())
+  blynk:virtualWrite(6, "clr", getConnectedUsers())
 end}
-
 connectBlynk()
 
 while true do
