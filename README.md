@@ -28,5 +28,6 @@ Enjoy!
 
 ## QR-Code for Blynk project
 ![Qr-blynk](https://github.com/ImOstrovskiy/blynk_routermon/blob/main/BlynkApp.png)
+
 You can copy my Blynk project with this QR-code
 
