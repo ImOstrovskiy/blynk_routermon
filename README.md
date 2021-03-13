@@ -11,7 +11,7 @@ opkg install lua luasocket luasec unzip openssl-util libustream-openssl wget
 # Geting blynk_routermon from github
 cd /root
 wget --no-check-certificate https://github.com/ImOstrovskiy/blynk_routermon/releases/download/2.0/blynk_routermon-2.0.zip && unzip blynk_routermon-2.0.zip && rm -rf blynk_routermon-2.0.zip
-cd blynk_routermon-1.0
+cd blynk_routermon-2.0
 
 # Run it
 lua routermon.lua <your_auth_token>
