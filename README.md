@@ -6,7 +6,7 @@ Created with ❤ by Im_Ostrovskiy
 ```
 # Getting needed packages
 opkg update
-opkg install lua luasocket luasec unzip openssl-util libustream-openssl wget
+opkg install lua luasocket luasec unzip openssl-util libustream-openssl wget etherwake
 
 # Geting blynk_routermon from github
 cd /root
